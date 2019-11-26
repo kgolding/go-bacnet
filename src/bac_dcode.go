@@ -100,10 +100,10 @@ func encode_tag(apdu []byte, tag_number byte, context_specific bool, len_value_t
 		apdu[0] |= byte(len_value_type)
 	} else {
 		apdu[0] |= 5
-		length++
-		if (len_value_type <= 253) {
+		if len_value_type <= 253 {
 			apdu[length] = byte(len_value_type)
-		} else if (len_value_type <= 65535) {
+			length++
+		} else if len_value_type <= 65535 {
 			apdu[length] = 254
 			length += encode_unsigned16(apdu[length:], uint16(len_value_type))
 		} else {
